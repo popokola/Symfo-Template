@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Form\UserType;
 use App\Form\PasswordResetType;
 use App\Form\VerifyPasswordType;
@@ -50,10 +52,7 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
 
-            $header = [
-                'typ' => 'JWT',
-                'alg' => 'HS256',
-            ];
+            $header = $jwt->setDefaultHeader();
 
             $payload = [
                 'user_id' => $user->getId()           
@@ -94,11 +93,8 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('app_password_reset');
             }
 
-            $header = [
-                'typ' => 'JWT',
-                'alg' => 'HS256',
-            ];
-
+            $header = $jwt->setDefaultHeader();
+    
             $payload = [
                 'user_id' => $user->getId()           
             ];
@@ -122,7 +118,7 @@ class SecurityController extends AbstractController
     }
     
     #[Route(path: '/password-reset/{token}', name: 'app_password_reset_token')]
-    public function verifyPasswordReset(string $token, Request $request, UserRepository $userRepository, SendMailService $mailer, JWTService $jwt): Response
+    public function verifyPasswordReset(string $token, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager, SendMailService $mailer, JWTService $jwt): Response
     {
       
         if (!$jwt->isValid($token) 
@@ -145,10 +141,7 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $user->setPlainPassword($data->getPlainPassword());
-            $user->setupdatedAT(new \DateTime());
-            $userRepository->save($user, true);
+            $entityManager->flush();
             return $this->redirectToRoute('app_login');
         }
         

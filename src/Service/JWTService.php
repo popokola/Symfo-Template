@@ -85,4 +85,13 @@ class JWTService
         $header = $this->getHeader($token);
         return $this->generate($header, $payload, $secret, 0);
     }
+
+    public function setDefaultHeader(): array
+    {
+        $header = [
+            'alg' => 'HS256',
+            'typ' => 'JWT'
+        ];
+        return $header;
+    }
 }
