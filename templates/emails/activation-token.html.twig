@@ -1,0 +1,5 @@
+<h1>Activez votre compte</h1>
+<p>Hello {{ user.email }},</p>
+<p>Votre inscription sur VG-Creator est à valider en cliquant sur le lien ci-dessous :</p>
+<p><a href="{{ absolute_url(path('app_activation', {token: token})) }}">{{ absolute_url(path('app_activation', {token: token})) }}</a></p>
+<p>Ce lien expirera dans 3 heures</p>
