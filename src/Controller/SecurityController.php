@@ -142,6 +142,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Votre mot de passe a bien été modifié');
             return $this->redirectToRoute('app_login');
         }
         

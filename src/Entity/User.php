@@ -30,7 +30,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    #[NotBlank]
+    #[NotBlank(allowNull: true, message: 'Please enter a password')]
     #[Length(min: 6)]
     private ?string $plainPassword = null;
 
