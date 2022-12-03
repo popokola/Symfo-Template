@@ -2,6 +2,10 @@ controllers_security:
     resource: ../src/Controller/SecurityController.php
     type: attribute
 
+controllers_registration:
+    resource: ../src/Controller/RegistrationController.php
+    type: attribute
+
 controllers_front:
     resource: ../src/Controller/Front
     name_prefix: front_

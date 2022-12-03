@@ -34,24 +34,4 @@ class SecurityController extends AbstractController
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
-
-    #[Route(path: '/register', name: 'app_register')]
-    public function register(UserRepository $userRepository, Request $request): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->save($user, true);
-
-            return $this->redirectToRoute('app_login');
-        }
-
-        return $this->render('security/register.html.twig', [
-            'form' => $form->createView()
-        ]);
-
-    }
 }
