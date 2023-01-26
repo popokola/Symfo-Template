@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -10,20 +10,21 @@
         {% endblock %}
 
         {% block javascripts %}
+            <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
    
     
+    
     <body class="h-full">
        
         {{ include('back/default/_header.html.twig') }}
-        {{ include('back/default/_sidebar.html.twig') }}
+        <!-- {{ include('back/default/_sidebar.html.twig') }} -->
        
 
-       
-        {% block body %}{% endblock %}
-
+        
     </body>
 
 

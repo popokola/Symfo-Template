@@ -3,6 +3,10 @@ if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localS
 } else {
     document.documentElement.classList.remove('dark')
 }
+//get the uri of the current page
+var uri = window.location.pathname;
+
+if (uri.indexOf('admin') > -1) {
 
 
 var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -45,3 +49,4 @@ themeToggleBtn.addEventListener('click', function() {
     }
     
 });
+}
